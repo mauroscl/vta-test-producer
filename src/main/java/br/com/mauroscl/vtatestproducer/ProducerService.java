@@ -28,31 +28,27 @@ public class ProducerService {
 
   public void enviarMensagens() throws InterruptedException {
     while (true) {
-      int i = 0;
-      while (i < 100) {
-        enviarInsercao();
-        enviarValidacao();
-        i++;
-      }
+      enviarInsercao(5);
+      enviarValidacao(80);
       Thread.sleep(1000);
     }
   }
 
-  private void enviarInsercao() {
-
-    rabbitTemplate.convertAndSend(INSERTION_QUEUE, gerarRegra());
+  private void enviarInsercao(int quantidade) {
+    for (int i = 0; i < quantidade; i++) {
+      rabbitTemplate.convertAndSend(INSERTION_QUEUE, gerarRegra());
+    }
   }
 
-  private void enviarValidacao() {
-    rabbitTemplate.convertAndSend(VALIDATION_QUEUE,  gerarValidacao());
-    rabbitTemplate.convertAndSend(VALIDATION_QUEUE, gerarValidacao());
+  private void enviarValidacao(int quantidade) {
+    for (int i = 0; i < quantidade; i++) {
+      rabbitTemplate.convertAndSend(VALIDATION_QUEUE, gerarValidacao());
+    }
   }
 
   private List<String> gerarClientes() {
-    return IntStream.range(1, QUANTIDADE_CLIENTES + 1)
-        .boxed()
-        .map(i -> "client" + String.format("%03d", i))
-    .collect(Collectors.toList());
+    return IntStream.range(1, QUANTIDADE_CLIENTES + 1).boxed()
+        .map(i -> "client" + String.format("%03d", i)).collect(Collectors.toList());
   }
 
   private String obterCliente() {
@@ -80,7 +76,7 @@ public class ProducerService {
   }
 
   private String gerarUrl() {
-    return "www." + new String(gerarCaracteres())  +  ".com";
+    return "www." + new String(gerarCaracteres()) + ".com";
   }
 
   private String gerarExpressao() {
@@ -89,7 +85,7 @@ public class ProducerService {
 
   private char[] gerarCaracteres() {
     char[] caracteres = new char[QUANTIDADE_CARACTERES_DOMINIO_URL];
-    for(int i = 0 ; i < QUANTIDADE_CARACTERES_DOMINIO_URL; i ++ ) {
+    for (int i = 0; i < QUANTIDADE_CARACTERES_DOMINIO_URL; i++) {
       caracteres[i] = (char) (97 + random.nextInt(26));
     }
     return caracteres;
