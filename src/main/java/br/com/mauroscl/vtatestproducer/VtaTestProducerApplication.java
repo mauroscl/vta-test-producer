@@ -1,6 +1,5 @@
 package br.com.mauroscl.vtatestproducer;
 
-import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,7 +17,6 @@ public class VtaTestProducerApplication implements CommandLineRunner {
 
   @Override
   public void run(final String... args) throws Exception {
-    Scanner in = new Scanner(System.in);
     producerService.enviarMensagens();
   }
 }
