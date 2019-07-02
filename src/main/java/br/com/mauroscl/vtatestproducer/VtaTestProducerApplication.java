@@ -17,6 +17,23 @@ public class VtaTestProducerApplication implements CommandLineRunner {
 
   @Override
   public void run(final String... args) throws Exception {
-    producerService.enviarMensagens();
+
+    if (args.length != 2) {
+      System.out.println("obrigatório informar 2 parâmetros");
+      System.exit(0);
+    }
+
+    int quantidadeInsercoes = 0;
+    int quantidadeValidacoes = 0;
+    try {
+      quantidadeInsercoes = Integer.parseInt(args[0]);
+      quantidadeValidacoes = Integer.parseInt(args[1]);
+
+    } catch (NumberFormatException e) {
+      System.out.println("parâmetros inválidos");
+      System.exit(0);
+    }
+
+    producerService.enviarMensagens(quantidadeInsercoes, quantidadeValidacoes);
   }
 }

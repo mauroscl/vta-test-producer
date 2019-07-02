@@ -26,10 +26,10 @@ public class ProducerService {
     random = new Random();
   }
 
-  public void enviarMensagens() throws InterruptedException {
+  public void enviarMensagens(int quantidadeInsercoes, int quantidadeValidacoes) throws InterruptedException {
     while (true) {
-      enviarInsercao(5);
-      enviarValidacao(80);
+      enviarInsercao(quantidadeInsercoes);
+      enviarValidacao(quantidadeValidacoes);
       Thread.sleep(1000);
     }
   }
